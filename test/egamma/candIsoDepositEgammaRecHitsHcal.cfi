@@ -1,0 +1,19 @@
+module candIsoDepositEgammaRecHitsHcal = CandIsoDepositProducer {
+  InputTag src = REPLACEME
+  string trackType = "candidate"
+  bool MultipleDepositsFlag = false
+  PSet ExtractorPSet = 
+  {
+    string ComponentName = "EgammaRecHitExtractor"
+    string   detector      = "Hcal"
+    InputTag barrelRecHits = hbhereco
+    InputTag endcapRecHits = hbhereco
+    bool     tryBoth       = false    // they are the same...
+    string isolationVariable = "et"
+    double etMin = 0.
+    double intRadius = 0.0
+    double extRadius = .5
+    bool subtractSuperClusterEnergy = false
+  }
+
+}

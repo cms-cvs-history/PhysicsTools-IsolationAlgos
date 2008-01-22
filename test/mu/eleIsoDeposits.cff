@@ -1,0 +1,130 @@
+#pieces needed to run the associator-related stuff
+include "Geometry/CMSCommonData/data/cmsIdealGeometryXML.cff"
+include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
+include "Geometry/CaloEventSetup/data/CaloGeometry.cfi"
+include "Geometry/CommonDetUnit/data/globalTrackingGeometry.cfi"
+include "TrackPropagation/SteppingHelixPropagator/data/SteppingHelixPropagatorAny.cfi"
+
+
+#include "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCtfTk.cfi"
+#include "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorTowers.cfi"
+#include "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorHits.cfi"
+
+
+#candIsoDeposit from tracks for trackerMuons; make distinct names for tracker and global muons
+module eleIsoDepositCtfTk 
+       = candIsoDepositCtfTk from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCtfTk.cfi"
+replace eleIsoDepositCtfTk.src = pixelMatchGsfElectrons
+replace eleIsoDepositCtfTk.trackType = "gsf"
+
+#candIsoDeposit maker for trackerMuons based on TrackAssociator using towers
+module eleIsoDepositCalByAssociatorTowers 
+       = candIsoDepositCalByAssociatorTowers from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorTowers.cfi"
+replace eleIsoDepositCalByAssociatorTowers.src = pixelMatchGsfElectrons
+replace eleIsoDepositCalByAssociatorTowers.trackType = "gsf"
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.EBRecHitCollectionLabel   = ecalRecHit:EcalRecHitsEB 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.EERecHitCollectionLabel   = ecalRecHit:EcalRecHitsEE 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.CaloTowerCollectionLabel  = towerMaker 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.HBHERecHitCollectionLabel = hbhereco 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.HORecHitCollectionLabel   = horeco 
+ 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useEcal = false      # RecoHits 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useHcal = false     # RecoHits 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useHO = false        # RecoHits 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useCalo = true     # CaloTowers 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useMuon = false      # RecoHits 
+
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.dREcalPreselection = 1.0 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.dRHcalPreselection = 1.0 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.dREcal = 1.0 
+replace eleIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.dRHcal = 1.0 
+
+#candIsoDeposit maker for  and trackerMuons based on TrackAssociator using rec-hits
+module eleIsoDepositCalByAssociatorHits 
+       = candIsoDepositCalByAssociatorHits from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorHits.cfi"
+replace eleIsoDepositCalByAssociatorHits.src = pixelMatchGsfElectrons
+replace eleIsoDepositCalByAssociatorHits.trackType = "gsf"
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.EBRecHitCollectionLabel   = ecalRecHit:EcalRecHitsEB
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.EERecHitCollectionLabel   = ecalRecHit:EcalRecHitsEE
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.CaloTowerCollectionLabel  = towerMaker
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.HBHERecHitCollectionLabel = hbhereco
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.HORecHitCollectionLabel   = horeco
+
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useEcal = true      # RecoHits
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useHcal = true      # RecoHits
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useHO = true	  # RecoHits
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useCalo = false     # CaloTowers
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useMuon = false      # RecoHits
+
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.dREcalPreselection = 1.0
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.dRHcalPreselection = 1.0
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.dREcal = 1.0
+replace eleIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.dRHcal = 1.0
+
+#candIsoDeposit maker for trackerMuons based on TrackAssociator using towers
+module eleIsoDepositJets 
+       = candIsoDepositJets from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositJets.cfi"
+replace eleIsoDepositJets.src = pixelMatchGsfElectrons
+replace eleIsoDepositJets.trackType = "gsf"
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.EBRecHitCollectionLabel   = ecalRecHit:EcalRecHitsEB 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.EERecHitCollectionLabel   = ecalRecHit:EcalRecHitsEE 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.CaloTowerCollectionLabel  = towerMaker 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.HBHERecHitCollectionLabel = hbhereco 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.HORecHitCollectionLabel   = horeco 
+ 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useEcal = false      # RecoHits 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useHcal = false     # RecoHits 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useHO = false        # RecoHits 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useCalo = true     # CaloTowers 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useMuon = false      # RecoHits 
+
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.dREcalPreselection = 0.5 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.dRHcalPreselection = 0.5 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.dREcal = 0.5 
+replace eleIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.dRHcal = 0.5 
+
+#Ecal-only candIsoDeposit using CaloExtractor for 
+module eleIsoDepositCalEcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
+replace eleIsoDepositCalEcal.src = pixelMatchGsfElectrons
+replace eleIsoDepositCalEcal.trackType = "gsf"
+replace eleIsoDepositCalEcal.ExtractorPSet.Weight_E = 1
+replace eleIsoDepositCalEcal.ExtractorPSet.Weight_H = 0
+
+
+#Hcal-only candIsoDeposit using CaloExtractor for 
+module eleIsoDepositCalHcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
+replace eleIsoDepositCalHcal.src = pixelMatchGsfElectrons
+replace eleIsoDepositCalHcal.trackType = "gsf"
+replace eleIsoDepositCalHcal.ExtractorPSet.Weight_E = 0
+replace eleIsoDepositCalHcal.ExtractorPSet.Weight_H = 1
+
+
+##########################################################################
+# and now sequences of the above
+##########################################################################
+
+sequence eleIsoDepositsAssoc = {
+  eleIsoDepositCalByAssociatorTowers & eleIsoDepositCalByAssociatorHits
+}
+#------------------------------
+
+sequence eleIsoDepositsCal = {
+  eleIsoDepositCalEcal & eleIsoDepositCalHcal
+}
+#------------------------------
+
+sequence eleIsoDepositsJets = {
+  eleIsoDepositJets
+}
+
+#------------------------------
+
+sequence eleIsoDepositsTk = {
+  eleIsoDepositCtfTk
+}
+
+#------------------------------
+# "standard sequences"
+sequence eleIsoDeposits = {
+  eleIsoDepositsTk & eleIsoDepositCalByAssociatorTowers & eleIsoDepositsJets
+}

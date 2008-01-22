@@ -1,0 +1,22 @@
+module candIsoDepositCal = CandIsoDepositProducer {
+  InputTag src = REPLACEME
+  string trackType = "best"
+  bool MultipleDepositsFlag = false
+  PSet ExtractorPSet = 
+  {
+    string ComponentName = "CaloExtractor"
+    InputTag CaloTowerCollectionLabel = towerMaker
+    untracked string DepositLabel = "EcalPlusHcal"
+    double Weight_E = 1.5
+    double Weight_H = 1.0
+    double Threshold_E = 0.2
+    double Threshold_H = 0.5
+    double DR_Veto_E = 0.07
+    double DR_Veto_H = 0.10
+    double DR_Max = 1.0
+
+    bool Vertex_Constraint_XY = false
+    bool Vertex_Constraint_Z = false
+  }
+
+}

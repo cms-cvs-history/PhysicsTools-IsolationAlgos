@@ -1,0 +1,241 @@
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaEcalIsolation.cfi
+module egammaEcalIsolationNG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaEcalDeposits
+         string weight = "1"
+         double deltaR = 0.3
+         vstring vetos = {}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaEcalRecHitIsolation.cfi
+module egammaEcalRecHitIsolationNG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaRecHitsEcalDeposits
+         string weight = "1"
+         double deltaR = 0.4
+         vstring vetos = { }
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaEcalRelIsolation.cfi
+// slightly different as it uses electron et instead of supercluster et
+module egammaEcalRelIsolation1NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaEcalDeposits
+         string weight = "1.0/et"
+         double deltaR = 0.3
+         vstring vetos = {}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaEcalRelIsolation.cfi
+//  exactly the same as the EgammaAnalysis one
+module egammaEcalRelIsolation2NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sumRelative"
+         InputTag  src = egammaEcalDeposits
+         string weight = "1"
+         double deltaR = 0.3
+         vstring vetos = {}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaHcalIsolation.cfi
+module egammaHcalIsolation1NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaRecHitsHcalDeposits
+         string weight = "1"
+         double deltaR = 0.3
+         vstring vetos = {"0.15"}
+         vstring vetos = {}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaHcalIsolation.cfi
+module egammaHcalIsolation2NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaHcalDeposits
+         string weight = "1"
+         double deltaR = 0.3
+         vstring vetos = {"0.15"}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaTowerIsolation.cfi
+module egammaTowerIsolationNG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaTowersDeposits
+         string weight = "1"
+         double deltaR = 0.3
+         vstring vetos = {"0.15"}
+         bool skipDefaultVeto = true
+     }}
+}
+
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaHOE.cfi
+module egammaHOE1NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sumRelative"
+         InputTag  src = egammaRecHitsHcalDeposits
+         string weight = "1"
+         double deltaR = 0.15
+         vstring vetos = {}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaHOE.cfi
+module egammaHOE2NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaRecHitsHcalDeposits
+         string weight = "1.0/et"
+         double deltaR = 0.15
+         vstring vetos = {}
+         bool skipDefaultVeto = true
+     }}
+}
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaHOETower.cfi
+module egammaHOETower1NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sumRelative"
+         InputTag  src = egammaTowersDeposits
+         string weight = "1"
+         double deltaR = 0.15
+         vstring vetos = {}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaHOETower.cfi
+module egammaHOETower2NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaTowersDeposits
+         string weight = "1.0/et"
+         double deltaR = 0.15
+         vstring vetos = {}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaElectronTkIsolation.cfi
+module egammaElectronTkIsolationNG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaElectronTkDeposits
+         string weight = "1"
+         double deltaR = 0.2
+         vstring vetos = {"0.02", "Threshold(1.5)"}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaElectronTkNumIsolation.cfi
+module egammaElectronTkNumIsolationNG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "count"
+         InputTag  src = egammaElectronTkDeposits
+         string weight = "1"
+         double deltaR = 0.2
+         vstring vetos = {"0.02", "Threshold(1.5)"}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaElectronTkRelIsolation.cfi
+module egammaElectronTkRelIsolationNG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sumRelative"
+         InputTag  src = egammaElectronTkDeposits
+         string weight = "1"
+         double deltaR = 0.2
+         vstring vetos = {"0.02", "Threshold(1.5)"}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaPhotonTkIsolation.cfi
+module egammaPhotonTkIsolationNG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaPhotonTkDeposits
+         string weight = "1"
+         double deltaR = 0.3
+         vstring vetos = {"Threshold(1.5)"}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaPhotonTkNumIsolation.cfi
+module egammaPhotonTkNumIsolationNG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "count"
+         InputTag  src = egammaPhotonTkDeposits
+         string weight = "1"
+         double deltaR = 0.3
+         vstring vetos = {"Threshold(1.5)"}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaPhotonTkRelIsolation.cfi
+module egammaPhotonTkRelIsolation1NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sum"
+         InputTag  src = egammaPhotonTkDeposits
+         string weight = "1.0/et"
+         double deltaR = 0.3
+         vstring vetos = {"Threshold(1.5)"}
+         bool skipDefaultVeto = true
+     }}
+}
+
+//  Mimic EgammaAnalysis/EgammaIsolationProducers/data/egammaPhotonTkRelIsolation.cfi
+module egammaPhotonTkRelIsolation2NG = CandIsolatorFromDeposits {
+     VPSet deposits = {{
+         string   mode = "sumRelative"
+         InputTag  src = egammaPhotonTkDeposits
+         string weight = "1"
+         double deltaR = 0.3
+         vstring vetos = {"Threshold(1.5)"}
+         bool skipDefaultVeto = true
+     }}
+}
+sequence aodIsolatorsFromDeposits = {
+	egammaEcalIsolationNG,
+	egammaEcalRelIsolation1NG,
+	egammaEcalRelIsolation2NG,
+	egammaTowerIsolationNG,
+	egammaHOETower1NG,
+	egammaHOETower2NG,
+	egammaElectronTkIsolationNG,
+	egammaElectronTkNumIsolationNG,
+	egammaElectronTkRelIsolationNG,
+	egammaPhotonTkIsolationNG,
+	egammaPhotonTkNumIsolationNG,
+	egammaPhotonTkRelIsolation1NG,
+	egammaPhotonTkRelIsolation2NG
+}
+sequence allIsolatorsFromDeposits = {
+        aodIsolatorsFromDeposits,
+	egammaEcalRecHitIsolationNG,
+	egammaHcalIsolation1NG,
+	egammaHcalIsolation2NG,
+	egammaHOE1NG,
+	egammaHOE2NG
+}

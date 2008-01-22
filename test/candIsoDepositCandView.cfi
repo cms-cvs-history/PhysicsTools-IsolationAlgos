@@ -1,0 +1,16 @@
+module candIsoDepositCandView = CandIsoDepositProducer {
+  InputTag src = REPLACEME
+  string trackType = "best"
+  bool MultipleDepositsFlag = false
+  PSet ExtractorPSet = 
+  {
+    string ComponentName = "CandViewExtractor"
+    InputTag inputCandView = REPLACE_ME_TOO
+    untracked string DepositLabel = ""
+    double Diff_r = 0.1
+    double Diff_z = 0.2
+    double DR_Max = 1.0
+    double DR_Veto = 0.01
+  }
+
+}

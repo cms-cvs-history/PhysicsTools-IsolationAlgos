@@ -1,0 +1,58 @@
+    block absIso = {
+       double max = 10.0
+       double dmax = 0.5
+       double rmax = 0.5
+       int32  bins = 10
+    }
+    block relIso = {
+       double max =  2.0
+       double dmax = 0.5
+       double rmax = 0.5
+       int32  bins = 10
+    }
+    module egammaEcalIsolationDiff = CandIsoComparer { InputTag src1 = egammaEcalIsolationNG InputTag src2 = egammaEcalIsolation using absIso }
+    module egammaEcalRecHitIsolationDiff = CandIsoComparer { InputTag src1 = egammaEcalRecHitIsolationNG InputTag src2 = egammaEcalRecHitIsolation using absIso }
+    module egammaEcalRelIsolationDiff1 = CandIsoComparer { InputTag src1 = egammaEcalRelIsolation1NG InputTag src2 = egammaEcalRelIsolation using relIso }
+    module egammaEcalRelIsolationDiff2 = CandIsoComparer { InputTag src1 = egammaEcalRelIsolation2NG InputTag src2 = egammaEcalRelIsolation using relIso }
+    module egammaEcalRelIsolationDiff12= CandIsoComparer { InputTag src1 = egammaEcalRelIsolation1NG InputTag src2 = egammaEcalRelIsolation2NG using relIso }
+
+    module egammaHcalIsolationDiff1 = CandIsoComparer { InputTag src1 = egammaHcalIsolation1NG InputTag src2 = egammaHcalIsolation using absIso }
+    module egammaHcalIsolationDiff2 = CandIsoComparer { InputTag src1 = egammaHcalIsolation2NG InputTag src2 = egammaHcalIsolation using absIso }
+    module egammaHcalIsolationDiff12= CandIsoComparer { InputTag src1 = egammaHcalIsolation1NG InputTag src2 = egammaHcalIsolation2NG using absIso }
+
+    module egammaTowerIsolationDiff = CandIsoComparer { InputTag src1 = egammaTowerIsolationNG InputTag src2 = egammaTowerIsolation using absIso }
+
+    module egammaHOEDiff1 = CandIsoComparer { InputTag src1 = egammaHOE1NG InputTag src2 = egammaHOE using relIso }
+    module egammaHOEDiff2 = CandIsoComparer { InputTag src1 = egammaHOE2NG InputTag src2 = egammaHOE using relIso }
+    module egammaHOEDiff12= CandIsoComparer { InputTag src1 = egammaHOE1NG InputTag src2 = egammaHOE2NG using relIso }
+
+    module egammaHOETowerDiff1 = CandIsoComparer { InputTag src1 = egammaHOETower1NG InputTag src2 = egammaHOETower using relIso }
+    module egammaHOETowerDiff2 = CandIsoComparer { InputTag src1 = egammaHOETower2NG InputTag src2 = egammaHOETower using relIso }
+    module egammaHOETowerDiff12= CandIsoComparer { InputTag src1 = egammaHOETower1NG InputTag src2 = egammaHOETower2NG using relIso }
+
+    module egammaElectronTkIsolationDiff = CandIsoComparer { InputTag src1 = egammaElectronTkIsolationNG InputTag src2 = egammaElectronTkIsolation using absIso }
+    module egammaElectronTkNumIsolationDiff = CandIsoComparer { InputTag src1 = egammaElectronTkNumIsolationNG InputTag src2 = egammaElectronTkNumIsolation using absIso }
+    module egammaElectronTkRelIsolationDiff = CandIsoComparer { InputTag src1 = egammaElectronTkRelIsolationNG InputTag src2 = egammaElectronTkRelIsolation using relIso }
+
+    module egammaPhotonTkIsolationDiff = CandIsoComparer { InputTag src1 = egammaPhotonTkIsolationNG InputTag src2 = egammaPhotonTkIsolation using absIso }
+    module egammaPhotonTkNumIsolationDiff = CandIsoComparer { InputTag src1 = egammaPhotonTkNumIsolationNG InputTag src2 = egammaPhotonTkNumIsolation using absIso }
+
+    module egammaPhotonTkRelIsolationDiff1 = CandIsoComparer { InputTag src1 = egammaPhotonTkRelIsolation1NG InputTag src2 = egammaPhotonTkRelIsolation using relIso }
+    module egammaPhotonTkRelIsolationDiff2 = CandIsoComparer { InputTag src1 = egammaPhotonTkRelIsolation2NG InputTag src2 = egammaPhotonTkRelIsolation using relIso }
+    module egammaPhotonTkRelIsolationDiff12= CandIsoComparer { InputTag src1 = egammaPhotonTkRelIsolation1NG InputTag src2 = egammaPhotonTkRelIsolation2NG using relIso }
+
+    sequence diff  = { 
+	egammaEcalIsolationDiff,
+	egammaEcalRecHitIsolationDiff,
+	egammaEcalRelIsolationDiff1,	egammaEcalRelIsolationDiff2, 	egammaEcalRelIsolationDiff12,
+	egammaHcalIsolationDiff1,	egammaHcalIsolationDiff2, 	egammaHcalIsolationDiff12,
+	egammaTowerIsolationDiff,
+	egammaHOEDiff1,	egammaHOEDiff2, 	egammaHOEDiff12,
+	egammaHOETowerDiff1, 	egammaHOETowerDiff2, 	egammaHOETowerDiff12,
+	egammaElectronTkIsolationDiff,
+	//egammaElectronTkNumIsolationDiff,
+	egammaElectronTkRelIsolationDiff,
+	egammaPhotonTkIsolationDiff,
+	//egammaPhotonTkNumIsolationDiff,
+	egammaPhotonTkRelIsolationDiff1, 	egammaPhotonTkRelIsolationDiff2, 	egammaPhotonTkRelIsolationDiff12
+     }
