@@ -1,0 +1,9 @@
+module goodMuonIsolations = CandTrackPtIsolationProducer {
+  InputTag src = goodMuons
+  InputTag elements = ctfWithMaterialTracks
+  double dRMax = 0.3
+  double dRMin = 0.015
+  double dzMax = 1000000.0
+  double d0Max = 1000000.0
+  double ptMin = 1.5
+}
