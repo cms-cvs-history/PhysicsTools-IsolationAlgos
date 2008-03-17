@@ -4,127 +4,67 @@ include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
 include "Geometry/CaloEventSetup/data/CaloGeometry.cfi"
 include "Geometry/CommonDetUnit/data/globalTrackingGeometry.cfi"
 include "TrackPropagation/SteppingHelixPropagator/data/SteppingHelixPropagatorAny.cfi"
+include "TrackingTools/TrackAssociator/data/DetIdAssociatorESProducer.cff" 
+
+include "RecoMuon/MuonIsolationProducers/data/trackExtractorBlocks.cff"
+include "RecoMuon/MuonIsolationProducers/data/caloExtractorByAssociatorBlocks.cff"
+include "RecoMuon/MuonIsolationProducers/data/jetExtractorBlock.cff"
+include "RecoMuon/MuonIsolationProducers/data/caloExtractorBlocks.cff"
 
 
-#include "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCtfTk.cfi"
-#include "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorTowers.cfi"
-#include "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorHits.cfi"
-
-
-#candIsoDeposit from tracks for trackerMuons; make distinct names for tracker and global muons
-module muIsoDepositCtfTk 
+#candIsoDeposit from tracks for muons; make distinct names for tracker and global muons
+module muIsoDepositTk 
        = candIsoDepositCtfTk from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCtfTk.cfi"
-replace muIsoDepositCtfTk.src = muons
-replace muIsoDepositCtfTk.trackType = "best"
+replace muIsoDepositTk.src = muons
+replace muIsoDepositTk.trackType = "best"
+#will read generalTracks here
+replace muIsoDepositTk.ExtractorPSet = { using MIsoTrackExtractorBlock }
 
-#candIsoDeposit maker for trackerMuons based on TrackAssociator using towers
+
+#candIsoDeposit maker for muons based on TrackAssociator using towers
 module muIsoDepositCalByAssociatorTowers 
        = candIsoDepositCalByAssociatorTowers from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorTowers.cfi"
 replace muIsoDepositCalByAssociatorTowers.src = muons
 replace muIsoDepositCalByAssociatorTowers.trackType = "best"
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.EBRecHitCollectionLabel   = ecalRecHit:EcalRecHitsEB 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.EERecHitCollectionLabel   = ecalRecHit:EcalRecHitsEE 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.CaloTowerCollectionLabel  = towerMaker 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.HBHERecHitCollectionLabel = hbhereco 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.HORecHitCollectionLabel   = horeco 
- 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useEcal = false      # RecoHits 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useHcal = false     # RecoHits 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useHO = false        # RecoHits 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useCalo = true     # CaloTowers 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.useMuon = false      # RecoHits 
+#can't write this here, since there was a replace during config :(
+#replace muIsoDepositCalByAssociatorTowers.ExtractorPSet = { using MIsoCaloExtractorByAssociatorTowersBlock }
 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.dREcalPreselection = 1.0 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.dRHcalPreselection = 1.0 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.dREcal = 1.0 
-replace muIsoDepositCalByAssociatorTowers.ExtractorPSet.TrackAssociatorParameters.dRHcal = 1.0 
-
-#candIsoDeposit maker for  and trackerMuons based on TrackAssociator using rec-hits
+#candIsoDeposit maker for  and muons based on TrackAssociator using rec-hits
 module muIsoDepositCalByAssociatorHits 
        = candIsoDepositCalByAssociatorHits from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorHits.cfi"
 replace muIsoDepositCalByAssociatorHits.src = muons
 replace muIsoDepositCalByAssociatorHits.trackType = "best"
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.EBRecHitCollectionLabel   = ecalRecHit:EcalRecHitsEB
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.EERecHitCollectionLabel   = ecalRecHit:EcalRecHitsEE
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.CaloTowerCollectionLabel  = towerMaker
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.HBHERecHitCollectionLabel = hbhereco
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.HORecHitCollectionLabel   = horeco
+#can't write this here, since there was a replace during config :(
+#replace muIsoDepositCalByAssociatorHits.ExtractorPSet = { using MIsoCaloExtractorByAssociatorHitsBlock }
 
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useEcal = true      # RecoHits
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useHcal = true      # RecoHits
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useHO = true	  # RecoHits
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useCalo = false     # CaloTowers
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.useMuon = false      # RecoHits
-
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.dREcalPreselection = 1.0
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.dRHcalPreselection = 1.0
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.dREcal = 1.0
-replace muIsoDepositCalByAssociatorHits.ExtractorPSet.TrackAssociatorParameters.dRHcal = 1.0
-
-#candIsoDeposit maker for trackerMuons based on TrackAssociator using towers
+#candIsoDeposit maker for muons based on TrackAssociator using towers
 module muIsoDepositJets 
        = candIsoDepositJets from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositJets.cfi"
 replace muIsoDepositJets.src = muons
 replace muIsoDepositJets.trackType = "best"
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.EBRecHitCollectionLabel   = ecalRecHit:EcalRecHitsEB 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.EERecHitCollectionLabel   = ecalRecHit:EcalRecHitsEE 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.CaloTowerCollectionLabel  = towerMaker 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.HBHERecHitCollectionLabel = hbhereco 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.HORecHitCollectionLabel   = horeco 
- 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useEcal = false      # RecoHits 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useHcal = false     # RecoHits 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useHO = false        # RecoHits 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useCalo = true     # CaloTowers 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.useMuon = false      # RecoHits 
-
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.dREcalPreselection = 0.5 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.dRHcalPreselection = 0.5 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.dREcal = 0.5 
-replace muIsoDepositJets.ExtractorPSet.TrackAssociatorParameters.dRHcal = 0.5 
+#can't write this here, since there was a replace during config :(
+#replace muIsoDepositJets.ExtractorPSet  = { using MIsoJetExtractorBlock }
 
 #Ecal-only candIsoDeposit using CaloExtractor for 
 module muIsoDepositCalEcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
 replace muIsoDepositCalEcal.src = muons
 replace muIsoDepositCalEcal.trackType = "best"
-replace muIsoDepositCalEcal.ExtractorPSet.Weight_E = 1
-replace muIsoDepositCalEcal.ExtractorPSet.Weight_H = 0
+replace muIsoDepositCalEcal.ExtractorPSet = { using MIsoCaloExtractorEcalBlock }
 
 
 #Hcal-only candIsoDeposit using CaloExtractor for 
 module muIsoDepositCalHcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
 replace muIsoDepositCalHcal.src = muons
 replace muIsoDepositCalHcal.trackType = "best"
-replace muIsoDepositCalHcal.ExtractorPSet.Weight_E = 0
-replace muIsoDepositCalHcal.ExtractorPSet.Weight_H = 1
+replace muIsoDepositCalHcal.ExtractorPSet = { using MIsoCaloExtractorHcalBlock }
 
 
 ##########################################################################
 # and now sequences of the above
 ##########################################################################
-
-sequence muIsoDepositsAssoc = {
-  muIsoDepositCalByAssociatorTowers & muIsoDepositCalByAssociatorHits
-}
-#------------------------------
-
-sequence muIsoDepositsCal = {
-  muIsoDepositCalEcal & muIsoDepositCalHcal
-}
-#------------------------------
-
-sequence muIsoDepositsJets = {
-  muIsoDepositJets
-}
-
-#------------------------------
-
-sequence muIsoDepositsTk = {
-  muIsoDepositCtfTk
-}
-
-#------------------------------
-# "standard sequences"
+# "standard sequence"
 sequence muIsoDeposits = {
-  muIsoDepositsTk & muIsoDepositCalByAssociatorTowers & muIsoDepositsJets
+  muIsoDepositTk & 
+  muIsoDepositCalByAssociatorTowers & 
+  muIsoDepositJets
 }

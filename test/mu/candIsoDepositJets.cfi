@@ -1,28 +1,11 @@
+# -*-TCL-*-
+include "RecoMuon/MuonIsolationProducers/data/jetExtractorBlock.cff"
+
 module candIsoDepositJets = CandIsoDepositProducer {
   InputTag src = REPLACEME
   string trackType = "best"
   bool MultipleDepositsFlag = false
-  PSet ExtractorPSet = 
-  {
-    string ComponentName = "JetExtractor"
-
-    InputTag JetCollectionLabel = midPointCone5CaloJets
-
-    string PropagatorName = "SteppingHelixPropagatorAny"
-
-    include "TrackingTools/TrackAssociator/data/default.cfi" 
-    #explicitely set the ones needed in this producer (below) 
-
-    double DR_Veto = 0.1
-    double DR_Max = 1.0
-
-#subtract sumEt of towers falling into the muon-veto region
-    bool ExcludeMuonVeto = true
-
-#count a jet if et> threshold
-#note: et from crossed towers and jet towers inside the veto cone are not counted
-    double Threshold = 5
-
-    untracked bool PrintTimeReport = false
+  PSet ExtractorPSet = {
+	using MIsoJetExtractorBlock
   }
 }
