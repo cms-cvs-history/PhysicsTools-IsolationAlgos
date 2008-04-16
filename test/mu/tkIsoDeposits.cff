@@ -1,0 +1,44 @@
+#pieces needed to run the associator-related stuff
+include "Geometry/CMSCommonData/data/cmsIdealGeometryXML.cff"
+include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
+include "Geometry/CaloEventSetup/data/CaloGeometry.cfi"
+include "Geometry/CommonDetUnit/data/globalTrackingGeometry.cfi"
+include "TrackPropagation/SteppingHelixPropagator/data/SteppingHelixPropagatorAny.cfi"
+include "TrackingTools/TrackAssociator/data/DetIdAssociatorESProducer.cff" 
+
+include "RecoMuon/MuonIsolationProducers/data/trackExtractorBlocks.cff"
+include "RecoMuon/MuonIsolationProducers/data/caloExtractorByAssociatorBlocks.cff"
+include "RecoMuon/MuonIsolationProducers/data/jetExtractorBlock.cff"
+include "RecoMuon/MuonIsolationProducers/data/caloExtractorBlocks.cff"
+
+#module goodTracks = ConcreteChargedCandidateProducer {
+#  InputTag src = generalTracks
+#  string particleType = "mu+"
+#  string cut = "pt > 20"
+#   }
+
+include "PhysicsTools/RecoAlgos/data/goodTracks.cfi"
+replace goodTracks.src = generalTracks
+replace goodTracks.cut = "pt > 20"
+
+#Ecal-only candIsoDeposit using CaloExtractor for 
+module tkIsoDepositCalEcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
+replace tkIsoDepositCalEcal.src = goodTracks
+replace tkIsoDepositCalEcal.trackType = "best"
+replace tkIsoDepositCalEcal.ExtractorPSet = { using MIsoCaloExtractorEcalBlock }
+
+
+#Hcal-only candIsoDeposit using CaloExtractor for 
+module tkIsoDepositCalHcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
+replace tkIsoDepositCalHcal.src = goodTracks
+replace tkIsoDepositCalHcal.trackType = "best"
+replace tkIsoDepositCalHcal.ExtractorPSet = { using MIsoCaloExtractorHcalBlock }
+
+
+##########################################################################
+# and now sequences of the above
+##########################################################################
+# "standard sequence"
+sequence tkIsoDepositsCal = {
+  goodTracks & tkIsoDepositCalEcal & tkIsoDepositCalHcal 
+}
