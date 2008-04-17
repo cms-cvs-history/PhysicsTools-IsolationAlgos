@@ -11,15 +11,36 @@ include "RecoMuon/MuonIsolationProducers/data/caloExtractorByAssociatorBlocks.cf
 include "RecoMuon/MuonIsolationProducers/data/jetExtractorBlock.cff"
 include "RecoMuon/MuonIsolationProducers/data/caloExtractorBlocks.cff"
 
-#module goodTracks = ConcreteChargedCandidateProducer {
-#  InputTag src = generalTracks
-#  string particleType = "mu+"
-#  string cut = "pt > 20"
-#   }
 
 include "PhysicsTools/RecoAlgos/data/goodTracks.cfi"
 replace goodTracks.src = generalTracks
 replace goodTracks.cut = "pt > 20"
+
+module tkIsoDepositTk 
+       = candIsoDepositCtfTk from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCtfTk.cfi"
+replace tkIsoDepositTk.src = goodTracks
+replace tkIsoDepositTk.trackType = "best"
+#will read generalTracks here
+replace tkIsoDepositTk.ExtractorPSet = { using MIsoTrackExtractorBlock }
+
+
+#candIsoDeposit maker for goodTracks based on TrackAssociator using towers
+module tkIsoDepositCalByAssociatorTowers 
+       = candIsoDepositCalByAssociatorTowers from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorTowers.cfi"
+replace tkIsoDepositCalByAssociatorTowers.src = goodTracks
+replace tkIsoDepositCalByAssociatorTowers.trackType = "best"
+
+#candIsoDeposit maker for goodTracks based on TrackAssociator using rec-hits
+module tkIsoDepositCalByAssociatorHits 
+       = candIsoDepositCalByAssociatorHits from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorHits.cfi"
+replace tkIsoDepositCalByAssociatorHits.src = goodTracks
+replace tkIsoDepositCalByAssociatorHits.trackType = "best"
+
+#candIsoDeposit maker for goodTracks based on TrackAssociator using towers
+module tkIsoDepositJets 
+       = candIsoDepositJets from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositJets.cfi"
+replace tkIsoDepositJets.src = goodTracks
+replace tkIsoDepositJets.trackType = "best"
 
 #Ecal-only candIsoDeposit using CaloExtractor for 
 module tkIsoDepositCalEcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
@@ -39,6 +60,9 @@ replace tkIsoDepositCalHcal.ExtractorPSet = { using MIsoCaloExtractorHcalBlock }
 # and now sequences of the above
 ##########################################################################
 # "standard sequence"
-sequence tkIsoDepositsCal = {
-  goodTracks & tkIsoDepositCalEcal & tkIsoDepositCalHcal 
+sequence tkIsoDeposits = {
+  goodTracks &
+  tkIsoDepositTk & 
+  tkIsoDepositCalByAssociatorTowers & 
+  tkIsoDepositJets
 }
