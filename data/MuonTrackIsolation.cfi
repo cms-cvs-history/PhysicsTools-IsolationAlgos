@@ -7,7 +7,7 @@ module MuonPtIsolation = MuonPtIsolationProducer{
 	# Source and Swarm collection
 	#
 	InputTag src       = globalMuons
-	InputTag elements  = ctfWithMaterialTracks
+	InputTag elements  = generalTracks
 
 
 	#
@@ -26,7 +26,7 @@ module MuonPtIsolation05 = MuonPtIsolationProducer{
 	# Source and Swarm collection
 	#
 	InputTag src       = globalMuons
-	InputTag elements  = ctfWithMaterialTracks
+	InputTag elements  = generalTracks
 
 
 	#
