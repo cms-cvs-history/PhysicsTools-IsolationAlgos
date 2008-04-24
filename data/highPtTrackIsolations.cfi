@@ -18,6 +18,6 @@
 
   sequence highPtTrackIsolations = {
     tkIsoDeposits & 
-    TkEcalIsoProducer &
-    TkHcalIsoProducer
+    EcalIsolationForTracks &
+    HcalIsolationForTracks
   }
