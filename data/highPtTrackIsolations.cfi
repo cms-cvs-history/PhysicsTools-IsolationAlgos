@@ -1,0 +1,23 @@
+  include "PhysicsTools/IsolationAlgos/data/tkIsoDeposits.cff"
+
+  module EcalIsolationForTracks = IsolationProducerForTracks {
+    InputTag tracks = goodTracks
+    InputTag highPtTracks = highPtTracks
+    InputTag isoDeps = tkIsoDepositCalByAssociatorTowers:ecal
+    double trackPtMin = 20
+    double coneSize = 0.3
+  }
+
+  module HcalIsolationForTracks = IsolationProducerForTracks {
+    InputTag tracks = goodTracks
+    InputTag highPtTracks = highPtTracks
+    InputTag isoDeps = tkIsoDepositCalByAssociatorTowers:hcal
+    double trackPtMin = 20
+    double coneSize = 0.3
+  }
+
+  sequence highPtTrackIsolations = {
+    tkIsoDeposits & 
+    TkEcalIsoProducer &
+    TkHcalIsoProducer
+  }
