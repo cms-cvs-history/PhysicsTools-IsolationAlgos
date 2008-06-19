@@ -3,7 +3,6 @@
 # -> isolation of muons against the sum of transverse energy depositions in the calorimeter 
 #   
 
-include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
 
 module MuonCalIsolation = MuonCalIsolationProducer{          
 	#

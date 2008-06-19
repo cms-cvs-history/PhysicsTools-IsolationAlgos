@@ -1,6 +1,5 @@
 #pieces needed to run the associator-related stuff
 include "Geometry/CMSCommonData/data/cmsIdealGeometryXML.cff"
-include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
 include "Geometry/CaloEventSetup/data/CaloGeometry.cfi"
 include "Geometry/CommonDetUnit/data/globalTrackingGeometry.cfi"
 include "TrackPropagation/SteppingHelixPropagator/data/SteppingHelixPropagatorAny.cfi"
