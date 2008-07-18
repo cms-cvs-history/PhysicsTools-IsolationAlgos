@@ -12,45 +12,73 @@ include "RecoMuon/MuonIsolationProducers/data/caloExtractorBlocks.cff"
 
 include "PhysicsTools/RecoAlgos/data/highPtTracks.cfi"
 
-module tkIsoDepositTk 
-       = candIsoDepositCtfTk from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCtfTk.cfi"
-replace tkIsoDepositTk.src = highPtTracks
-replace tkIsoDepositTk.trackType = "best"
-#will read generalTracks here
-replace tkIsoDepositTk.ExtractorPSet = { using MIsoTrackExtractorBlock }
+include "RecoMuon/MuonIsolationProducers/data/isoDepositProducerIOBlocks.cff"
+include "RecoMuon/MuonIsolationProducers/data/trackExtractorBlocks.cff"
+module tkIsoDepositTk = CandIsoDepositProducer {
+  InputTag src = highPtTracks
+  string trackType = "best"
+  bool MultipleDepositsFlag = false
+  PSet ExtractorPSet =
+  {
+        using MIsoTrackExtractorBlock
+  }
+}
+
+include "RecoMuon/MuonIsolationProducers/data/caloExtractorByAssociatorBlocks.cff"
+module tkIsoDepositCalByAssociatorTowers = CandIsoDepositProducer {
+  InputTag src = highPtTracks
+  string trackType = "best"
+  bool MultipleDepositsFlag = true
+  PSet ExtractorPSet =
+  {
+        using MIsoCaloExtractorByAssociatorTowersBlock
+  }
+
+}
 
 
-#candIsoDeposit maker for highPtTracks based on TrackAssociator using towers
-module tkIsoDepositCalByAssociatorTowers 
-       = candIsoDepositCalByAssociatorTowers from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorTowers.cfi"
-replace tkIsoDepositCalByAssociatorTowers.src = highPtTracks
-replace tkIsoDepositCalByAssociatorTowers.trackType = "best"
+module tkIsoDepositCalByAssociatorHits = CandIsoDepositProducer {
+  InputTag src = highPtTracks
+  string trackType = "best"
+  bool MultipleDepositsFlag = true
 
-#candIsoDeposit maker for highPtTracks based on TrackAssociator using rec-hits
-module tkIsoDepositCalByAssociatorHits 
-       = candIsoDepositCalByAssociatorHits from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCalByAssociatorHits.cfi"
-replace tkIsoDepositCalByAssociatorHits.src = highPtTracks
-replace tkIsoDepositCalByAssociatorHits.trackType = "best"
+  PSet ExtractorPSet = {
+        using MIsoCaloExtractorByAssociatorHitsBlock
+  }
+}
 
-#candIsoDeposit maker for highPtTracks based on TrackAssociator using towers
-module tkIsoDepositJets 
-       = candIsoDepositJets from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositJets.cfi"
-replace tkIsoDepositJets.src = highPtTracks
-replace tkIsoDepositJets.trackType = "best"
+include "RecoMuon/MuonIsolationProducers/data/jetExtractorBlock.cff"
 
-#Ecal-only candIsoDeposit using CaloExtractor for 
-module tkIsoDepositCalEcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
-replace tkIsoDepositCalEcal.src = highPtTracks
-replace tkIsoDepositCalEcal.trackType = "best"
-replace tkIsoDepositCalEcal.ExtractorPSet = { using MIsoCaloExtractorEcalBlock }
+module tkIsoDepositJets = CandIsoDepositProducer {
+  InputTag src = highPtTracks
+  string trackType = "best"
+  bool MultipleDepositsFlag = false
+  PSet ExtractorPSet = {
+        using MIsoJetExtractorBlock
+  }
+}
 
+include "RecoMuon/MuonIsolationProducers/data/caloExtractorBlocks.cff"
 
-#Hcal-only candIsoDeposit using CaloExtractor for 
-module tkIsoDepositCalHcal = candIsoDepositCal from "PhysicsTools/IsolationAlgos/test/mu/candIsoDepositCal.cfi"
-replace tkIsoDepositCalHcal.src = highPtTracks
-replace tkIsoDepositCalHcal.trackType = "best"
-replace tkIsoDepositCalHcal.ExtractorPSet = { using MIsoCaloExtractorHcalBlock }
+module tkIsoDepositCalEcal = CandIsoDepositProducer {
+  InputTag src = highPtTracks
+  string trackType = "best"
+  bool MultipleDepositsFlag = false
+  PSet ExtractorPSet =
+  {
+        using MIsoCaloExtractorEcalBlock
+  }
+}
 
+module tkIsoDepositCalHcal = CandIsoDepositProducer {
+  InputTag src = highPtTracks
+  string trackType = "best"
+  bool MultipleDepositsFlag = false
+  PSet ExtractorPSet =
+  {
+        using MIsoCaloExtractorHcalBlock
+  }
+}
 
 ##########################################################################
 # and now sequences of the above
