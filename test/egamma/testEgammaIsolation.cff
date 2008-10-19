@@ -1,7 +1,0 @@
-include "PhysicsTools/IsolationAlgos/test/egamma/testEgammaIsolationAOD.cff"
-include "EgammaAnalysis/EgammaIsolationProducers/data/egammaHcalIsolation.cfi"
-include "EgammaAnalysis/EgammaIsolationProducers/data/egammaHOE.cfi"
-include "EgammaAnalysis/EgammaIsolationProducers/data/egammaEcalRecHitIsolation.cfi"
-
-sequence egammaIso = { egammaHcalIsolation, egammaHOE, egammaEcalRecHitIsolation, 
-                       egammaIsoFromAOD }

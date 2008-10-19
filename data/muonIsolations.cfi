@@ -1,7 +1,0 @@
-module muonIsolations = ValeMapFloatMerger {
-  VInputTag src = { 
-    goodMuonIsolations,
-    goodTrackIsolations,
-    goodStandAloneMuonTrackIsolations
-  }
-}
