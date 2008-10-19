@@ -1,9 +1,0 @@
-module candIsoDepositCalByAssociatorHits = CandIsoDepositProducer {
-  InputTag src = REPLACEME
-  string trackType = "best"
-  bool MultipleDepositsFlag = true
-
-  PSet ExtractorPSet = {
-	using MIsoCaloExtractorByAssociatorHitsBlock
-  }
-}
