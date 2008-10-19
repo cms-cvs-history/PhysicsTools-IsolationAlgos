@@ -1,9 +1,0 @@
-module allStandAloneMuonTrackIsolations = CandPtIsolationProducer {
-  InputTag src = allStandAloneMuonTracks
-  InputTag elements = allTracks
-  double dRMax = 0.2
-  double dRMin = 0.015
-  double dzMax = 1000000.0
-  double d0Max = 1000000.0
-  double ptMin = 1.5
-}
