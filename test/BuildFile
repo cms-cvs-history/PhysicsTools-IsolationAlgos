@@ -7,4 +7,5 @@
   <use name=PhysicsTools/IsolationUtils>
   <use name=PhysicsTools/IsolationAlgos>
   <use name=RecoMuon/MuonIsolation>
+  <use name=CommonTools/UtilAlgos>
 </library>
